@@ -2,13 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package airport;
-
+package airport.model;
+import airport.core.Prototype;
 /**
  *
  * @author edangulo
  */
-public class Location {
+public class Location implements Prototype<Location> {
     
     private final String airportId;
     private String airportName;
@@ -25,11 +25,15 @@ public class Location {
         this.airportLatitude = airportLatitude;
         this.airportLongitude = airportLongitude;
     }
-
+    
+    @Override
+    public Location copy() {
+        return new Location(airportId, airportName, airportCity, airportCountry, airportLatitude, airportLongitude);
+    }
     public String getAirportId() {
         return airportId;
     }
-
+    
     public String getAirportName() {
         return airportName;
     }
@@ -50,4 +54,18 @@ public class Location {
         return airportLongitude;
     }
     
+    public void setName(String name) { 
+        this.airportName = name; 
+    }
+    
+    public void setCity(String city) { 
+        this.airportCity = city; 
+    }
+    
+    public void setLatitude(double latitude) { 
+        this.airportLatitude = latitude; 
+    }
+    public void setLongitude(double longitude) { 
+        this.airportLongitude = longitude; 
+    }
 }
