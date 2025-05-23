@@ -2,6 +2,8 @@ package airport.model.repositories;
 
 import airport.model.Passenger;
 import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PassengerRepository {
     private final Map<Long, Passenger> passengers = new HashMap<>();
@@ -29,5 +31,6 @@ public class PassengerRepository {
     public boolean removePassenger(long id) {
         return passengers.remove(id) != null;
     }
+
 }
 
