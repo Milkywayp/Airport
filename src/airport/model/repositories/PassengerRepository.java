@@ -6,10 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PassengerRepository {
+
     private final Map<Long, Passenger> passengers = new HashMap<>();
 
     public boolean addPassenger(Passenger p) {
-        if (p == null || passengers.containsKey(p.getId())) return false;
+        if (p == null || passengers.containsKey(p.getId())) {
+            return false;
+        }
         passengers.put(p.getId(), p);
         return true;
     }
@@ -32,5 +35,8 @@ public class PassengerRepository {
         return passengers.remove(id) != null;
     }
 
+    public Optional<Passenger> findById(long id) {
+        Passenger p = getPassenger(id);
+        return p != null ? Optional.of(p) : Optional.empty();
+    }
 }
-

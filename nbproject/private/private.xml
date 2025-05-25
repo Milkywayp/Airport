@@ -9,6 +9,7 @@
             <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/src/airport/core/observer/Observer.java</file>
             <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/src/airport/model/Passenger.java</file>
             <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/json/flights.json</file>
+            <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/src/airport/view/tabs/AddToFlightTab.java</file>
             <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/src/airport/core/StatusCode.java</file>
             <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/src/airport/model/repositories/LocationRepository.java</file>
             <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/json/locations.json</file>
@@ -19,12 +20,12 @@
             <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/src/airport/model/Flight.java</file>
             <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/src/airport/core/Prototype.java</file>
             <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/src/airport/model/Location.java</file>
-            <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/src/airport/model/storage/JsonLoader.java</file>
             <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/src/airport/core/observer/Observable.java</file>
             <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/src/airport/view/utils/Validator.java</file>
             <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/json/passengers.json</file>
             <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/src/airport/view/tabs/PassengerTab.java</file>
             <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/src/airport/model/Plane.java</file>
+            <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/src/airport/view/tabs/UpdateInfoTab.java</file>
             <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/src/airport/core/Response.java</file>
             <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/src/airport/view/tabs/FlighTab.java</file>
             <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/src/airport/view/MainView.java</file>
@@ -32,6 +33,7 @@
             <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/src/airport/view/components/PanelRound.java</file>
             <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/src/airport/view/AirportFrame.java</file>
             <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/src/airport/controller/LocationController.java</file>
+            <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/src/airport/util/JsonLoader.java</file>
             <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/src/airport/controller/FlightController.java</file>
             <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/src/airport/view/tabs/LocationTab.java</file>
             <file>file:/C:/Users/bbelt/OneDrive/Escritorio/Airport/src/airport/Main.java</file>

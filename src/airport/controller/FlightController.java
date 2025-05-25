@@ -22,8 +22,9 @@ public class FlightController {
         this.passengerRepo = passengerRepo;
     }
 
-    public Response<Flight> createFlight(String id, String planeId, String departureId, String arrivalId,
+    public Response<Flight> createFlight(String id, String planeId, String departureId, String scaleId,String arrivalId,
                                          LocalDateTime departureDate, int hArrival, int mArrival) {
+        
         if (flightRepo.exists(id))
             return new Response<>(StatusCode.BAD_REQUEST, "El vuelo ya existe", null);
 

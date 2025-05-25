@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package airport.model;
 
 import java.time.LocalDate;
@@ -110,4 +106,16 @@ public class Passenger {
         return flights.size();
     }
     
+    @Override
+    public Passenger clone() {
+        return new Passenger(
+            this.id,
+            this.firstname,
+            this.lastname,
+            this.birthDate,
+            this.countryPhoneCode,
+            this.phone,
+            this.country
+        );
+    }
 }
