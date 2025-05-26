@@ -1,35 +1,45 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package airport.view;
 
-import airport.model.Flight;
-import airport.model.Location;
-import airport.model.Plane;
+import airport.controller.*;
 import airport.model.Passenger;
-import com.formdev.flatlaf.FlatDarkLaf;
-import java.awt.Color;
+import airport.model.Plane;
+import airport.model.Location;
+import airport.model.Flight;
+import airport.core.Response;
+import airport.core.StatusCode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import com.formdev.flatlaf.FlatDarkLaf;
+
+import java.awt.Color;
 import java.util.ArrayList;
-import javax.swing.UIManager;
+
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
- * @author edangulo
+ * Vista principal del sistema de aeropuerto
  */
 public class AirportFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form AirportFrame
-     */
+    private PassengerController passengerController;
+    private PlaneController planeController;
+    private LocationController locationController;
+    private FlightController flightController;
+
     private int x, y;
+
     private ArrayList<Passenger> passengers;
     private ArrayList<Plane> planes;
     private ArrayList<Location> locations;
     private ArrayList<Flight> flights;
+
+    // Tablas
+    private JTable passengerTable;
+    private JTable planeTable;
+    private JTable locationTable;
+    private JTable flightTable;
 
     public AirportFrame() {
         initComponents();
@@ -42,11 +52,162 @@ public class AirportFrame extends javax.swing.JFrame {
         this.setBackground(new Color(0, 0, 0, 0));
         this.setLocationRelativeTo(null);
 
-        this.generateMonths();
-        this.generateDays();
-        this.generateHours();
-        this.generateMinutes();
-        this.blockPanels();
+        initTables();
+        generateMonths();
+        generateDays();
+        generateHours();
+        generateMinutes();
+        blockPanels();
+    }
+
+    private void initTables() {
+        initPassengersTable();
+        initPlanesTable();
+        initLocationsTable();
+        initFlightsTable();
+    }
+
+private void initPassengersTable() {
+    DefaultTableModel model = (DefaultTableModel) passengerTable.getModel();
+    model.setRowCount(0); // limpiar filas
+
+    var response = passengerController.getAllPassengers();
+    if (response.getStatusCode() == StatusCode.SUCCESS) {
+        for (Passenger p : response.getData()) {
+            model.addRow(new Object[]{
+                p.getId(),
+                p.getFirstname() + " " + p.getLastname(), // no getFullname(), concateno
+                p.calculateAge()
+            });
+        }
+    }
+}
+
+private void initPlanesTable() {
+    DefaultTableModel model = (DefaultTableModel) planeTable.getModel();
+    model.setRowCount(0);
+
+    var response = planeController.getAllPlanes();
+    if (response.getStatusCode() == StatusCode.SUCCESS) {
+        for (Plane p : response.getData()) {
+            model.addRow(new Object[]{
+                p.getId(),
+                p.getBrand() + " " + p.getModel(),  // mejor mostrar marca + modelo
+                p.getMaxCapacity(),                  // acá es getMaxCapacity()
+                p.getAirline(),
+                p.getNumFlights()
+            });
+        }
+    }
+}
+
+private void initLocationsTable() {
+    DefaultTableModel model = (DefaultTableModel) locationTable.getModel();
+    model.setRowCount(0);
+
+    var response = locationController.getAllLocations();
+    if (response.getStatusCode() == StatusCode.SUCCESS) {
+        for (Location l : response.getData()) {
+            model.addRow(new Object[]{
+                l.getCode(),
+                l.getAirportName(),
+                l.getAirportCity(),
+                l.getAirportCountry(),
+                l.getAirportLatitude(),
+                l.getAirportLongitude()
+            });
+        }
+    }
+}
+
+private void initFlightsTable() {
+    DefaultTableModel model = (DefaultTableModel) flightTable.getModel();
+    model.setRowCount(0);
+
+    var response = flightController.getAllFlights();
+    if (response.getStatusCode() == StatusCode.SUCCESS) {
+        for (Flight f : response.getData()) {
+            model.addRow(new Object[]{
+                f.getId(),                               // en Flight es getId(), no getFlightNumber()
+                f.getPlane().getBrand() + " " + f.getPlane().getModel(),
+                f.getDepartureLocation().getAirportCity(),
+                f.getScaleLocation() != null ? f.getScaleLocation().getAirportCity() : "—",
+                f.getArrivalLocation().getAirportCity(),
+                f.getDepartureDate().toString(),
+                f.calculateArrivalDate().toString(),
+                f.getNumPassengers()
+            });
+        }
+    }
+}
+
+
+    public AirportFrame(
+            PassengerController passengerController,
+            PlaneController planeController,
+            LocationController locationController,
+            FlightController flightController) {
+
+        this(); // llama al constructor sin parámetros
+
+        this.passengerController = passengerController;
+        this.planeController = planeController;
+        this.locationController = locationController;
+        this.flightController = flightController;
+
+        loadInitialData();
+    }
+
+    private void loadInitialData() {
+        updatePassengerTable();
+        updatePlaneTable();
+        updateLocationTable();
+        updateFlightTable();
+    }
+
+    private void updatePassengerTable() {
+        DefaultTableModel model = (DefaultTableModel) passengerTable.getModel();
+        model.setRowCount(0);
+        for (Passenger p : passengers) {
+            model.addRow(new Object[]{
+                p.getId(),
+                p.getFullname(),
+                p.calculateAge()
+            });
+        }
+    }
+
+    private void updatePlaneTable() {
+        DefaultTableModel model = (DefaultTableModel) planeTable.getModel();
+        model.setRowCount(0);
+        for (Plane p : planes) {
+            model.addRow(new Object[]{p.getId(), p.getModel(), p.getMaxCapacity()});
+        }
+    }
+
+    private void updateLocationTable() {
+        DefaultTableModel model = (DefaultTableModel) locationTable.getModel();
+        model.setRowCount(0);
+        for (Location l : locations) {
+            model.addRow(new Object[]{l.getCode(), l.getAirportName(), l.getAirportCity()});
+        }
+    }
+
+    private void updateFlightTable() {
+        DefaultTableModel model = (DefaultTableModel) flightTable.getModel();
+        model.setRowCount(0); // Limpiar la tabla
+
+        for (Flight f : flights) {
+            model.addRow(new Object[]{
+                f.getId(),
+                f.getPlane().getModel(),
+                f.getDepartureLocation().getCode(),
+                f.getArrivalLocation().getCode(),
+                f.getDepartureDate().toString(),
+                f.calculateArrivalDate().toString(),
+                f.getNumPassengers()
+            });
+        }
     }
 
     private void blockPanels() {
@@ -1412,7 +1573,7 @@ public class AirportFrame extends javax.swing.JFrame {
 
         }
         for (int i = 1; i < smf.getTabCount(); i++) {
-                smf.setEnabledAt(i, true);
+            smf.setEnabledAt(i, true);
         }
         smf.setEnabledAt(5, false);
         smf.setEnabledAt(6, false);
@@ -1475,7 +1636,7 @@ public class AirportFrame extends javax.swing.JFrame {
         double latitude = Double.parseDouble(jTextField17.getText());
         double longitude = Double.parseDouble(jTextField18.getText());
 
-        this.locations.add(new Location(id, name, city, country, latitude, longitude));
+        this.locations.add(new Location(id, name, city, country, latitude, longitude, id));
 
         this.jComboBox2.addItem(id);
         this.jComboBox3.addItem(id);
@@ -1663,11 +1824,10 @@ public class AirportFrame extends javax.swing.JFrame {
     private void userSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userSelectActionPerformed
         try {
             String id = userSelect.getSelectedItem().toString();
-            if (! id.equals(userSelect.getItemAt(0))) {
+            if (!id.equals(userSelect.getItemAt(0))) {
                 jTextField20.setText(id);
                 jTextField28.setText(id);
-            }
-            else{
+            } else {
                 jTextField20.setText("");
                 jTextField28.setText("");
             }

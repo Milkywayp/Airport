@@ -15,7 +15,7 @@ public class LocationController {
         this.repo = repo;
     }
 
-    public Response<Location> createLocation(String id, String name, String city, String country, double lat, double lon) {
+    public Response<Location> createLocation(String id, String name, String city, String country, double lat, double lon, String code) {
         if (!Validator.isValidAirportId(id))
             return new Response<>(StatusCode.BAD_REQUEST, "ID inválido", null);
         if (!Validator.isValidCoordinates(lat, lon))
@@ -26,7 +26,7 @@ public class LocationController {
             return new Response<>(StatusCode.BAD_REQUEST, "Nombre, ciudad o país inválidos", null);
         }
 
-        Location location = new Location(id, name, city, country, lat, lon);
+        Location location = new Location(id, name, city, country, lat, lon, code);
         boolean success = repo.addAirport(location);
 
         if (!success)
